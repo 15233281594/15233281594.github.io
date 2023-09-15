@@ -1,0 +1,447 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.7.0" type="image/png" sizes="32x32"><meta name="description" content="你真正了解 sequelize 吗">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequelize">
+<meta property="og:url" content="https://pepsimulberry.cn/posts/35110.html">
+<meta property="og:site_name" content="Red Rose 86 technician">
+<meta property="og:description" content="你真正了解 sequelize 吗">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-08T11:46:49.163Z">
+<meta property="article:modified_time" content="2023-09-15T07:28:49.527Z">
+<meta property="article:author" content="Z Sir">
+<meta name="twitter:card" content="summary"><title>Sequelize | Red Rose 86 technician</title><link ref="canonical" href="https://pepsimulberry.cn/posts/35110.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.7.0"><script src="/live2d-widget-master/autoload.js"></script><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Red Rose 86 technician</div><div class="header-banner-info__subtitle">Just do my best</div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Sequelize</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-11-08</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-09-15</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+        <h1 id="你真正了解-sequelize-吗"   >
+          <a href="#你真正了解-sequelize-吗" class="heading-link"><i class="fas fa-link"></i></a><a href="#你真正了解-sequelize-吗" class="headerlink" title="你真正了解 sequelize 吗"></a>你真正了解 sequelize 吗</h1>
+      <span id="more"></span>
+
+
+        <h3 id="主键"   >
+          <a href="#主键" class="heading-link"><i class="fas fa-link"></i></a><a href="#主键" class="headerlink" title="主键"></a>主键</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; primaryKey: true &#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="唯一键"   >
+          <a href="#唯一键" class="heading-link"><i class="fas fa-link"></i></a><a href="#唯一键" class="headerlink" title="唯一键"></a>唯一键</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; unique: true &#125;</span><br><span class="line">&#123; unique: &#x27;compositeIndex&#x27; &#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="自增"   >
+          <a href="#自增" class="heading-link"><i class="fas fa-link"></i></a><a href="#自增" class="headerlink" title="自增"></a>自增</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; autoIncrement: true &#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="允许为空"   >
+          <a href="#允许为空" class="heading-link"><i class="fas fa-link"></i></a><a href="#允许为空" class="headerlink" title="允许为空"></a>允许为空</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; allowNull: true &#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="默认值"   >
+          <a href="#默认值" class="heading-link"><i class="fas fa-link"></i></a><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; defaultValue: true &#125;</span><br><span class="line">&#123; defaultValue: DataTypes.NOW &#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="属性-x2F-外键"   >
+          <a href="#属性-x2F-外键" class="heading-link"><i class="fas fa-link"></i></a><a href="#属性-x2F-外键" class="headerlink" title="属性&#x2F;外键"></a>属性&#x2F;外键</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">personId: &#123;</span><br><span class="line">  type: Sequelize.INTEGER,</span><br><span class="line">  references: &#x27;persons&#x27;,</span><br><span class="line">  referencesKey: &#x27;id&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h5 id="安装"   >
+          <a href="#安装" class="heading-link"><i class="fas fa-link"></i></a><a href="#安装" class="headerlink" title="安装"></a>安装</h5>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save sequelize</span><br><span class="line">$ npm install --save mysql2</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="测试连接"   >
+          <a href="#测试连接" class="heading-link"><i class="fas fa-link"></i></a><a href="#测试连接" class="headerlink" title="测试连接"></a>测试连接</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sequelize</span><br><span class="line">    .authenticate()</span><br><span class="line">    .then(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;Connection has been established successfully.&#x27;);</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(err =&gt; &#123;</span><br><span class="line">        console.error(&#x27;Unable to connect to the database:&#x27;, err);</span><br><span class="line">    &#125;);</span><br><span class="line">// 测试完注释掉即可</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="使用-sequelize"   >
+          <a href="#使用-sequelize" class="heading-link"><i class="fas fa-link"></i></a><a href="#使用-sequelize" class="headerlink" title="使用 sequelize"></a>使用 sequelize</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const sequelize = new Sequelize(&#x27;db&#x27;,&#x27;root&#x27;,&#x27;123456&#x27;,&#123;</span><br><span class="line">  dialect:&#x27;mysql&#x27;,</span><br><span class="line">  host:&#x27;127.0.0.1&#x27;,</span><br><span class="line">  timezone:&#x27;+08:00&#x27;, //这里是东八区,默认为0时区</span><br><span class="line">  //连接池 最大5个 最小0个 时间10000毫秒</span><br><span class="line">  pool:&#123;</span><br><span class="line">    max:5,</span><br><span class="line">    min:0,</span><br><span class="line">    acquire:30000,</span><br><span class="line">    idle:10000,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="创建数据库表-创建模型-就是字段"   >
+          <a href="#创建数据库表-创建模型-就是字段" class="heading-link"><i class="fas fa-link"></i></a><a href="#创建数据库表-创建模型-就是字段" class="headerlink" title="创建数据库表(创建模型 就是字段)"></a>创建数据库表(创建模型 就是字段)</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const book = sequelize.define(&#x27;book&#x27;,&#123;</span><br><span class="line">   name:&#123;</span><br><span class="line">    type:DataTypes.STRING,</span><br><span class="line">    allowNull:false,</span><br><span class="line">   &#125;,</span><br><span class="line">   price:&#123;</span><br><span class="line">    type:DataTypes.INTEGER,</span><br><span class="line">   &#125;,</span><br><span class="line">   author:DataTypes.STRING,</span><br><span class="line">   type:DataTypes.STRING,</span><br><span class="line">&#125;,&#123;</span><br><span class="line">  //关闭默认创建字段的开始时间和结束时间</span><br><span class="line">  timestamps:false,</span><br><span class="line">&#125;)</span><br><span class="line">// 更多的查看官网</span><br><span class="line">https://www.sequelize.cn/core-concepts/model-basics</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="插入数据"   >
+          <a href="#插入数据" class="heading-link"><i class="fas fa-link"></i></a><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">async function inits()&#123;</span><br><span class="line">//将创建表,如果表已经存在,则将其首先删除(用户模型表刚刚(重新)创建)  sequelize实例同步所有模型字段</span><br><span class="line">  await sequelize.sync(&#123;</span><br><span class="line">    force:true</span><br><span class="line">  &#125;)</span><br><span class="line">  //插入多条数据  单条数据create(&#123;name:&#x27;张三&#x27;,price:20&#125;)</span><br><span class="line">  await book.bulkCreate(</span><br><span class="line">   [</span><br><span class="line">    &#123;</span><br><span class="line">      name: &#x27;Rick And Morty - The first season&#x27;,</span><br><span class="line">      price: 30,</span><br><span class="line">      author: &#x27;unkwon&#x27;,</span><br><span class="line">      type: &#x27;comic&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: &#x27;Rick And Morty&#x27;,</span><br><span class="line">      price: 300,</span><br><span class="line">      author: &#x27;unkwon&#x27;,</span><br><span class="line">      type: &#x27;comic&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: &#x27;Rick And&#x27;,</span><br><span class="line">      price: 3000,</span><br><span class="line">      author: &#x27;unkwon&#x27;,</span><br><span class="line">      type: &#x27;comic&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">   ]</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inits();</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 每次连接都将把原来的表删除,然后做一次同步</span><br><span class="line">sequelize.sync(&#123;</span><br><span class="line">   force:true,</span><br><span class="line"> &#125;).then(()=&gt; user.create(&#123;</span><br><span class="line">     firstName:&#x27;四哥&#x27;,</span><br><span class="line">     lastName:&#x27;aosika&#x27;</span><br><span class="line"> &#125;).then(()=&gt;&#123;</span><br><span class="line">   return user.findAll(&#123;</span><br><span class="line">     where:&#123;</span><br><span class="line">       firstName:&#x27;四哥&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;).then(console.log)</span><br><span class="line">)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="express-res-send-和-res-json-的区别"   >
+          <a href="#express-res-send-和-res-json-的区别" class="heading-link"><i class="fas fa-link"></i></a><a href="#express-res-send-和-res-json-的区别" class="headerlink" title="express res.send()和 res.json()的区别"></a>express res.send()和 res.json()的区别</h3>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">res.json()的返回结果</span><br><span class="line">Response Headers 响应头中</span><br><span class="line">  content-Type:application/json;charset=utf-8;</span><br><span class="line"></span><br><span class="line">res.send()</span><br><span class="line">Response Headers</span><br><span class="line">  content-Type:text/html;charset=utf-8;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="为什么使用数据库连接池"   >
+          <a href="#为什么使用数据库连接池" class="heading-link"><i class="fas fa-link"></i></a><a href="#为什么使用数据库连接池" class="headerlink" title="为什么使用数据库连接池"></a>为什么使用数据库连接池</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">数据库连接是一种关键、有限且昂贵的资源，创建和释放数据库连接是一个很耗时的操作，频繁地进行这样的操作将占用大量的性能开销，进而导致网站的响应速度下降，严重的时候可能导致服务器崩溃；数据库连接池可以节省系统许多开销。</span><br><span class="line"></span><br><span class="line">它允许应用程序重复使用一个现有的数据库连接，而不是重新建立一个；释放空闲时间超过最大空闲时间的数据库连接以避免因为没有释放数据库连接而引起的数据库连接遗漏。</span><br><span class="line">https://blog.csdn.net/weixin_42867975/article/details/90306610</span><br><span class="line"></span><br><span class="line">https://www.cnblogs.com/xsilence/p/12444228.html#:~:text=%E8%AF%AD%E6%B3%95%20%EF%BC%881%EF%BC%89createConnection%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E8%BF%9E%E6%8E%A5%E5%AF%B9%E8%B1%A1%EF%BC%88%E6%AD%A3%E5%BC%8F%E7%9A%84%E8%AF%B4%E6%B3%95%EF%BC%9A%E4%BD%BF%E7%94%A8createConnection%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A1%A8%E7%A4%BA%E4%B8%8Emysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E8%BF%9E%E6%8E%A5%E7%9A%84connection%E5%AF%B9%E8%B1%A1%EF%BC%89%20var%20connection%20%3D%20mysql.%20createConnection%20%28options%29%3B,%EF%BC%882%EF%BC%89%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84connect%E6%96%B9%E6%B3%95%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E3%80%82%20connection.%20connect%20%28function%20%28err%29%20%7B%20%2A%2A%2A%20%7D%29%3B</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="在设计数据库时为什么有的时候需要使用外键"   >
+          <a href="#在设计数据库时为什么有的时候需要使用外键" class="heading-link"><i class="fas fa-link"></i></a><a href="#在设计数据库时为什么有的时候需要使用外键" class="headerlink" title="在设计数据库时为什么有的时候需要使用外键"></a>在设计数据库时为什么有的时候需要使用外键</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">什么是外键：</span><br><span class="line">外键 (FK) 是用于建立和加强两个表数据之间的链接的一列或多列。通过将保存表中主键值的一列或多列添加到另一个表中，可创建两个表之间的链接。这个列就成为第二个表的外键。</span><br><span class="line">   外键可以保证数据的参照完整性。</span><br><span class="line">如果一个健壮的系统，数据库中的数据一定有很好的参照完整性，如果不用外键，就要多写代码对数据的完整性进行额外的判断</span><br><span class="line">	用程序(代码)控制，有很多缺点；录入成绩单时为了保证学号有效，首先要搜索档案，当档案很大时会影响效率。程序控制并不能保证百分之百引用完整性，尤其是并发操作。</span><br><span class="line">	说一个特例（主要是说明程序控制不好）：</span><br><span class="line">A录入成绩单，B在编辑档案。</span><br><span class="line">当A录入张三的成绩，保存时，搜索张三存在，于是程序下一步就要存盘，但这时B恰好把张三删除了。但A那边的程序并不知道，于是就把一条垃圾数据存进数据库中了。</span><br><span class="line">此例的操作流程正确与否不重要，但说明了程序控制并不是好方法。</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="express-中的-req-params-req-query-req-body"   >
+          <a href="#express-中的-req-params-req-query-req-body" class="heading-link"><i class="fas fa-link"></i></a><a href="#express-中的-req-params-req-query-req-body" class="headerlink" title="express 中的 req.params,req.query,req.body;"></a>express 中的 req.params,req.query,req.body;</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">req.params 是获取路由的url路径参数</span><br><span class="line">http:localhost:3000/test/1</span><br><span class="line">req.query 是获取路由的查询参数</span><br><span class="line">http:localhost:3000/test?id=1;</span><br><span class="line">以上两种一般用于get请求;(params和query与前端作用相同)</span><br><span class="line">req.body 一般用于post请求</span><br><span class="line">req.body是用来解析post请求中的数据,前端数据发送给后端的时候,用req.body用来接收。</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">router.post(&#x27;/login&#x27;,function(req,res)&#123;</span><br><span class="line">    let username=req.body.username;</span><br><span class="line">    let password=req.body.password;</span><br><span class="line">    if(username &amp;&amp; password)&#123;</span><br><span class="line">        res.send(&#123;</span><br><span class="line">            code:200,</span><br><span class="line">            username:username,          token:&#x27;dhuadh123hui213h,dqwdfiuejnfuiwjf,fewkio0kjfi9203kjirjf&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        code:500,</span><br><span class="line">        res.send(&#123;</span><br><span class="line">            msg:&#x27;用户名密码错误&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="为什么分类页面接口写-2-个响应速度最快"   >
+          <a href="#为什么分类页面接口写-2-个响应速度最快" class="heading-link"><i class="fas fa-link"></i></a><a href="#为什么分类页面接口写-2-个响应速度最快" class="headerlink" title="为什么分类页面接口写 2 个响应速度最快"></a>为什么分类页面接口写 2 个响应速度最快</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为分类页面分为左右两部分，分为2个接口一方面是数据少响应快，第二是因为如果加了redis就更快了</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="为什么首页使用-redis-后每次请求数据的时间还变慢了"   >
+          <a href="#为什么首页使用-redis-后每次请求数据的时间还变慢了" class="heading-link"><i class="fas fa-link"></i></a><a href="#为什么首页使用-redis-后每次请求数据的时间还变慢了" class="headerlink" title="为什么首页使用 redis 后每次请求数据的时间还变慢了"></a>为什么首页使用 redis 后每次请求数据的时间还变慢了</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为使用redis后第一次请求的时候是从数据库开始请求数据的，数据很多，响应的快，第二次请求的时候redis已经将数据保存在缓存中了，将大量数据都保存在缓存中，就好比一个池子一样，找到对应的一条数据响应时间边长，但是这样的好处不仅减少了数据库的压力，更大的减少了资源的浪费</span><br></pre></td></tr></table></div></figure>
+
+
+        <h6 id="token"   >
+          <a href="#token" class="heading-link"><i class="fas fa-link"></i></a><a href="#token" class="headerlink" title="token"></a>token</h6>
+      <figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tokend是一个令牌，用来验证哪一个用户的</span><br><span class="line">作用：验证用户 比如张三 李四</span><br><span class="line">token是后端生成的,并且token是不能重复的</span><br><span class="line">npm install --save jsonwebtoken</span><br></pre></td></tr></table></div></figure>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://pepsimulberry.cn">Z Sir</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://pepsimulberry.cn/posts/35110.html">https://pepsimulberry.cn/posts/35110.html</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/posts/14384.html"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Jquery</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/posts/62688.html"><span class="paginator-prev__text">Mysql</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="gitalk-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%A0%E7%9C%9F%E6%AD%A3%E4%BA%86%E8%A7%A3-sequelize-%E5%90%97"><span class="toc-number">1.</span> <span class="toc-text">
+          你真正了解 sequelize 吗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%94%AE"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          主键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AF%E4%B8%80%E9%94%AE"><span class="toc-number">1.0.2.</span> <span class="toc-text">
+          唯一键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%A2%9E"><span class="toc-number">1.0.3.</span> <span class="toc-text">
+          自增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%81%E8%AE%B8%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.0.4.</span> <span class="toc-text">
+          允许为空</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">1.0.5.</span> <span class="toc-text">
+          默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7-x2F-%E5%A4%96%E9%94%AE"><span class="toc-number">1.0.6.</span> <span class="toc-text">
+          属性&#x2F;外键</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.0.6.0.1.</span> <span class="toc-text">
+          安装</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.0.6.0.1.1.</span> <span class="toc-text">
+          测试连接</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-sequelize"><span class="toc-number">1.0.6.0.1.2.</span> <span class="toc-text">
+          使用 sequelize</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8-%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B-%E5%B0%B1%E6%98%AF%E5%AD%97%E6%AE%B5"><span class="toc-number">1.0.6.0.1.3.</span> <span class="toc-text">
+          创建数据库表(创建模型 就是字段)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">1.0.6.0.1.4.</span> <span class="toc-text">
+          插入数据</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#express-res-send-%E5%92%8C-res-json-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.0.7.</span> <span class="toc-text">
+          express res.send()和 res.json()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="toc-number">1.0.7.0.0.1.</span> <span class="toc-text">
+          为什么使用数据库连接池</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9C%A8%E8%AE%BE%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E7%9A%84%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%A4%96%E9%94%AE"><span class="toc-number">1.0.7.0.0.2.</span> <span class="toc-text">
+          在设计数据库时为什么有的时候需要使用外键</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#express-%E4%B8%AD%E7%9A%84-req-params-req-query-req-body"><span class="toc-number">1.0.7.0.0.3.</span> <span class="toc-text">
+          express 中的 req.params,req.query,req.body;</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%88%86%E7%B1%BB%E9%A1%B5%E9%9D%A2%E6%8E%A5%E5%8F%A3%E5%86%99-2-%E4%B8%AA%E5%93%8D%E5%BA%94%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB"><span class="toc-number">1.0.7.0.0.4.</span> <span class="toc-text">
+          为什么分类页面接口写 2 个响应速度最快</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%A6%96%E9%A1%B5%E4%BD%BF%E7%94%A8-redis-%E5%90%8E%E6%AF%8F%E6%AC%A1%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E6%97%B6%E9%97%B4%E8%BF%98%E5%8F%98%E6%85%A2%E4%BA%86"><span class="toc-number">1.0.7.0.0.5.</span> <span class="toc-text">
+          为什么首页使用 redis 后每次请求数据的时间还变慢了</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#token"><span class="toc-number">1.0.7.0.0.6.</span> <span class="toc-text">
+          token</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/title.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">喜欢的小伙伴记得一键三连分享哦~</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/15233281594/15233281594.github.io" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="tencent://message?uin=859597463" target="_blank" rel="noopener" data-popover="social.QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">1</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">0</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Z Sir</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1.0.1/dist/canvas-nest.min.js" color="0,0,0" opacity="0.6" count="99" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-md5@latest/src/md5.min.js"></script><script>function loadGitalk () {
+  if (!document.getElementById('gitalk-container')) {
+    return;
+  }
+
+  var gitalk = new Gitalk({
+    id: md5(window.location.pathname.slice(1)),
+    clientID: '180feb72ee0969bc8610',
+    clientSecret: 'b165382549e54c2b4452d4570996903b3debd667',
+    repo: '15233281594.github.io',
+    owner: '15233281594',
+    admin: ['Red Rose 86 technician'],
+    distractionFreeMode: 'true',
+    language: 'zh-CN'
+  });
+  gitalk.render('gitalk-container');
+}
+
+if (false) {
+  loadGitalk();
+} else {
+  window.addEventListener('DOMContentLoaded', loadGitalk, false);
+}</script><script src="/js/utils.js?v=2.7.0"></script><script src="/js/stun-boot.js?v=2.7.0"></script><script src="/js/scroll.js?v=2.7.0"></script><script src="/js/header.js?v=2.7.0"></script><script src="/js/sidebar.js?v=2.7.0"></script><script type="application/json" src="/search.json"></script></body></html>
